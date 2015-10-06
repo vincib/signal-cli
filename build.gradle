@@ -13,6 +13,7 @@ repositories {
         url "https://raw.github.com/AsamK/maven/master/releases/"
     }
     mavenCentral()
+    mavenLocal()
 }
 
 dependencies {
