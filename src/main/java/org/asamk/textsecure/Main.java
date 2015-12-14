@@ -485,6 +485,9 @@ public class Main {
                         if (message.getBody().isPresent()) {
                             System.out.println("Body: " + message.getBody().get());
                         }
+                        if (message.getNickname().isPresent()) {
+                            System.out.println("Nickname: " + message.getNickname().get());
+                        }
                         if (message.getGroupInfo().isPresent()) {
                             TextSecureGroup groupInfo = message.getGroupInfo().get();
                             System.out.println("Group info:");
