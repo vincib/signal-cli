@@ -632,6 +632,29 @@ class Manager implements Signal {
         return buf.toString();
     }
 
+    public boolean getContacts(String number) {
+	Set<String> contacts = new HashSet<>();
+	try {
+	    String contact = canonicalizeNumber(number);
+	    contacts.add(contact);
+	} catch (InvalidNumberException e) {
+	    System.err.println("Failed to get contact \"" + number + "\": " + e.getMessage());
+	    System.err.println("Aborting…");
+	    System.exit(1);
+	} 
+	try {
+	    final List<ContactTokenDetails> contactsResults = accountManager.getContacts(contacts);
+	    for (ContactTokenDetails onecontact : contactsResults) {
+		System.out.println(" " + onecontact.getNumber() );
+	    }
+	} catch (IOException e) {
+	    System.err.println("Failed to get contact (IO Exception) \"" + number + "\": " + e.getMessage());
+	    System.err.println("Aborting…");
+	    System.exit(1);
+	}
+	return true;
+    }
+
     public byte[] sendUpdateGroupMessage(byte[] groupId, String name, Collection<String> members, String avatarFile) throws IOException, EncapsulatedExceptions, GroupNotFoundException, AttachmentInvalidException {
         GroupInfo g;
         if (groupId == null) {

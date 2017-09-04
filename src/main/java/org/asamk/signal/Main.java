@@ -611,6 +611,24 @@ public class Main {
                         }
                     }
                     break;
+                case "getContact":
+                    if (dBusConn != null) {
+                        System.err.println("getContact is not yet implemented via dbus");
+                        return 1;
+                    }
+                    if (!m.isRegistered()) {
+                        System.err.println("User is not registered.");
+                        return 1;
+                    }
+                    if (ns.get("number") != null) {
+			String numberc = ns.getString("number");
+			boolean results = m.getContacts(numberc);
+			System.err.println("getContact result end");
+                    } else {
+                        System.err.println("You need to specify the phone number of the contact to check.");
+                        return 1;
+                    }
+                    break;
                 case "daemon":
                     if (dBusConn != null) {
                         System.err.println("Stop it.");
@@ -818,6 +836,10 @@ public class Main {
         Subparser parserListIdentities = subparsers.addParser("listIdentities");
         parserListIdentities.addArgument("-n", "--number")
                 .help("Only show identity keys for the given phone number.");
+
+        Subparser parserGetContact = subparsers.addParser("getContact");
+        parserGetContact.addArgument("-n", "--number")
+                .help("Verify if a phone number is using Signal.");
 
         Subparser parserTrust = subparsers.addParser("trust");
         parserTrust.addArgument("number")
